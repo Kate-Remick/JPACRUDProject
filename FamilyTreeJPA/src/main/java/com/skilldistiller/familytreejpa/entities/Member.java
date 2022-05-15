@@ -29,8 +29,7 @@ public class Member {
 	@Column(name="death_date")
 	private LocalDate deathDate;
 	
-	@Column(name="is_married")
-	private boolean isMarried;
+	private boolean married;
 	
 	private boolean alive;
 	
@@ -49,7 +48,7 @@ public class Member {
 	public Member() {}
 
 	public Member(int id, String firstName, String lastName, String gender, LocalDate birthDate, LocalDate deathDate,
-			boolean isMarried, boolean alive, Integer motherId, Integer fatherId, Integer spouseId, String imagePath) {
+			boolean married, boolean alive, Integer motherId, Integer fatherId, Integer spouseId, String imagePath) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -57,7 +56,7 @@ public class Member {
 		this.gender = gender;
 		this.birthDate = birthDate;
 		this.deathDate = deathDate;
-		this.isMarried = isMarried;
+		this.married = married;
 		this.alive = alive;
 		this.motherId = motherId;
 		this.fatherId = fatherId;
@@ -67,7 +66,7 @@ public class Member {
 
 	@Override
 	public String toString() {
-		return "Member [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + "]";
+		return firstName + " " + lastName ;
 	}
 
 	public int getId() {
@@ -119,11 +118,11 @@ public class Member {
 	}
 
 	public boolean isMarried() {
-		return isMarried;
+		return married;
 	}
 
-	public void setMarried(boolean isMarried) {
-		this.isMarried = isMarried;
+	public void setMarried(boolean married) {
+		this.married = married;
 	}
 
 	public boolean isAlive() {
