@@ -76,12 +76,23 @@ public class FamilyController {
 	@RequestMapping(path="addMember.do", method=RequestMethod.POST)
 	public ModelAndView addingMember(Member memberToAdd, RedirectAttributes redir ) {
 		ModelAndView mv = new ModelAndView();
+		System.out.println(memberToAdd);
+		if(memberToAdd.getSpouseId() != null) {
+			memberToAdd.setMarried(true);
+		}else {
+			memberToAdd.setMarried(false);
+		}
+		if(memberToAdd.getDeathDate() == null) {
+			memberToAdd.setAlive(true);
+		}else {
+			memberToAdd.setAlive(false);
+		}
 		boolean success = dao.addMember(memberToAdd);
 		redir.addFlashAttribute("addSuccessful", success);
 		redir.addFlashAttribute("member", memberToAdd);
-		mv.setViewName("redir:memberAdded.do");
+		mv.setViewName("redirect:memberAdded.do");
 		if(success = false) {
-			mv.setViewName("redir:memberNotAdded");
+			mv.setViewName("redirect:memberNotAdded.do");
 		}
 		return mv;
 	}
@@ -131,7 +142,7 @@ public class FamilyController {
 		ModelAndView mv = new ModelAndView();
 		memberToEdit = dao.editMember(memberToEdit, memberEdits);
 		redir.addFlashAttribute("memberToEdit", memberToEdit);
-		mv.setViewName("redir:memberEdited.do");
+		mv.setViewName("redirect:memberEdited.do");
 		return mv;
 	}
 	@RequestMapping(path="memberEdited.do")

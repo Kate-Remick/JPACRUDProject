@@ -53,11 +53,14 @@
 		<button>Add family member</button>
 	</a>
 	<form action="editMember.do" method="get">
-		<c:forEach var="member" items="${allMembers}">
-		<select name="memberToEdit" value="${member }">${member }</select>
-		</c:forEach>	
-		<button type ="submit">Change member details</button>
-		
+		<label for="memberToEdit">Select Member:</label>
+			<select id="memberToEdit" name="memberToEdit" >
+			<c:forEach var="member" items="${allMembers}">
+			<option value="${member}">${member }</option>
+			</c:forEach>
+			</select>
+		<button type="submit">Change member details</button>
+
 	</form>
 	<a href="delete.do" method="get">
 		<button>Remove Family Member</button>

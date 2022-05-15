@@ -12,7 +12,7 @@
 	<%@ include file="nav.jsp"%>
 	<h1>Information on ${member}</h1>
 	<c:if test="${memberAdded == true }">
-		<p>${memberToAdd }addedtothe family tree successfully!</p>
+		<p>${member }added to the family tree successfully!</p>
 	</c:if>
 
 

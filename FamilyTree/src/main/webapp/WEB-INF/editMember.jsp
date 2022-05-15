@@ -12,19 +12,24 @@
 		<c:when test="${editingRelationships == true }">
 			<form action="editMember.do" method="post">
 				<h3>Edit Father:</h3>
-				<label for="father">Choose father:</label> <select name="father_id"
-					value="null" id="mother">unknown/not in list
-				</select>
+				<label for="father">Father:</label> <select name="fatherId"
+				id="father">
+				<option value=>unknown or not listed</option>
 				<c:forEach var="man" items="${men}">
-					<select name="father_id" value="${man.id }">${man }</select>
+					<option value="${man.id }">${man }</option>
 				</c:forEach>
+				
 				<h3>Edit Mother:</h3>
-				<label for="mother">Choose mother:</label> <select name="mother_id"
-					value="null" id="mother">unknown/not in list
-				</select>
+				<label for="mother">Mother:</label> <select name="motherId"
+				id="mother">
+				<option value=>unknown or not listed</option>
 				<c:forEach var="woman" items="${women}">
-					<select name="mother_id" value="${woman.id }">${woman }</select>
-				</c:forEach>
+					<option value="${woman.id }">${woman }</option>
+					</c:forEach>
+				</select>
+				
+				 
+			</select>
 			</form>
 			<h3>Edit Spouse:</h3>
 			<select name="spouseId" value="null">Not married
