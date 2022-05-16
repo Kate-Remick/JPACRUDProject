@@ -8,7 +8,7 @@
 <title>Family Member Edit</title>
 </head>
 <body>
-<h3>Editing details for ${member}</h3>
+	<h3>Editing details for ${member}</h3>
 	<c:choose>
 		<c:when test="${editingRelationships == true }">
 			<form action="editMember.do" method="post">
@@ -39,10 +39,10 @@
 							<option value="${person.id}">${person}</option>
 						</c:if>
 					</c:forEach>
-				</select> <input type="hidden" name="memberToEditId" value="${member.id }" /> <input
-					type="hidden" name="firstName" value="${member.firstName }" /> <input
-					type="hidden" name="lastName" value="${member.lastName }" /> <input
-					type="hidden" name="gender" value="${member.gender }" /> <input
+				</select> <input type="hidden" name="memberToEditId" value="${member.id }" />
+				<input type="hidden" name="firstName" value="${member.firstName }" />
+				<input type="hidden" name="lastName" value="${member.lastName }" />
+				<input type="hidden" name="gender" value="${member.gender }" /> <input
 					type="hidden" name="birthDate" value="${member.birthDate }" /> <input
 					type="hidden" name="deathDate" value="${member.deathDate }" /> <input
 					type="hidden" name="alive" value="${member.alive }" /> <input
@@ -55,24 +55,24 @@
 				<label for="firstName">First Name: </label><input type="text"
 					name="firstName" /><br> <label for="lastName">Last
 					Name: </label><input type="text" name="lastName" /> <br>
-				<labelfor="birthDate">Birth Date: </label>
-				<input type="text" name="birthDate" value="${member.birthDate }" />
-				<br>
+				<labelfor="birthDate">Birth Date: </label> <input type="text"
+					name="birthDate" value="${member.birthDate }" /> <br>
 				<p>(yyyy-mm-dd)</p>
-				<label for="deathDate">Death Date: </label>
-				<input type="text" name="deathDate" value="${member.deathDate }" />
-				<br>
+				<label for="deathDate">Death Date: </label> <input type="text"
+					name="deathDate" value="${member.deathDate }" /> <br>
 				<p>(yyyy-mm-dd)</p>
 				<br>
 				<h5>Gender:</h5>
-				<br> <label for="male">Male</label><input type="radio"
-					name="gender" value="male" /> <br> <label for="female">Female</label><input
-					type="radio" name="gender" value="female" /> <br> <label
-					for="other/unknown">Other/Unknown</label><input type="radio"
-					name="gender" value="other/unknown" /> <br> <input
-					type="hidden" name="memberToEditId" value="${member.id }" /> <input
-					type="hidden" name="imagePath" value="${member.imagePath }" /> <input
-					type="hidden" name="married" value="${member.married }" /> <input
+				<br>
+				<label for="male">Male</label>
+				<input type="radio" name="gender" value="male" /> <br>
+				<label for="female">Female</label>
+				<input type="radio" name="gender" value="female" /> <br>
+				<label for="other/unknown">Other/Unknown</label>
+				<input type="radio" name="gender" value="other/unknown" /> <br>
+				<input type="hidden" name="memberToEditId" value="${member.id }" />
+				<input type="hidden" name="imagePath" value="${member.imagePath }" />
+				<input type="hidden" name="married" value="${member.married }" /> <input
 					type="hidden" name="motherId" value="${member.motherId }" /> <input
 					type="hidden" name="fatherId" value="${member.fatherId }" /> <input
 					type="hidden" name="spouseId" value="${member.spouseId }" /> <input
@@ -80,12 +80,16 @@
 				<button type="submit">Submit Changes</button>
 			</form>
 		</c:when>
-		<c:when test="${editingPhoto == true }">
+		<!--<c:when test="${editingPhoto == true }">
 			<form action="editMember.do" method="post">
+				<div name="image">
+					<h5>Select image to upload:</h5>
+					<input type="file" name="memberPhoto" accept="image/*" />
+					<button type="submit">Submit</button>
+				</div>
 
-
-				<input type="hidden" name="memberToEditId" value="${member.id }" /> <input
-					type="hidden" name="married" value="${member.married }" /> <input
+				<input type="hidden" name="memberToEditId" value="${member.id }" />
+				<input type="hidden" name="married" value="${member.married }" /> <input
 					type="hidden" name="motherId" value="${member.motherId }" /> <input
 					type="hidden" name="fatherId" value="${member.fatherId }" /> <input
 					type="hidden" name="spouseId" value="${member.spouseId }" /> <input
@@ -98,7 +102,7 @@
 					type="hidden" name="alive" value="${member.alive }" />
 				<button type="submit">Submit Changes</button>
 			</form>
-		</c:when>
+		</c:when>-->
 		<c:otherwise></c:otherwise>
 	</c:choose>
 

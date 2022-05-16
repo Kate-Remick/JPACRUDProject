@@ -18,11 +18,11 @@
 		</form>
 	</c:if>
 	<c:if test="${memberAdded == true }">
-		<p>${member }addedto the family tree successfully!</p>
+		<p>${member }added to the family tree successfully!</p>
 	</c:if>
 
 
-	<div name="image">
+	<!--<div name="image">
 		<h1>Include image here</h1>
 		<c:if test="${editing == true }">
 			<form action="editMember.do" method="get">
@@ -35,7 +35,7 @@
 					</buttion>
 			</form>
 		</c:if>
-	</div>
+	</div>  -->
 
 
 	<div name="details">
