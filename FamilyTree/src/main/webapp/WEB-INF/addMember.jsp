@@ -66,10 +66,7 @@
 					</c:forEach>
 				</select>
 			</div>
-			<!-- <div name="image">
-			<h5>Select image to upload: </h5>
-			<input type="file" name="memberPhoto" />
-			</div> -->
+			
 			<button type="submit">Submit</button>
 		</form>
 

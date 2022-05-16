@@ -53,8 +53,8 @@
 		<c:when test="${editingDetails == true }">
 			<form action="editMember.do" method="post">
 				<label for="firstName">First Name: </label><input type="text"
-					name="firstName" /><br> <label for="lastName">Last
-					Name: </label><input type="text" name="lastName" /> <br>
+					name="firstName" value="${member.firstName }" /><br> <label for="lastName">Last
+					Name: </label><input type="text" name="lastName" value="${member.lastName }"/> <br>
 				<labelfor="birthDate">Birth Date: </label> <input type="text"
 					name="birthDate" value="${member.birthDate }" /> <br>
 				<p>(yyyy-mm-dd)</p>
@@ -63,7 +63,6 @@
 				<p>(yyyy-mm-dd)</p>
 				<br>
 				<h5>Gender:</h5>
-				<br>
 				<label for="male">Male</label>
 				<input type="radio" name="gender" value="male" /> <br>
 				<label for="female">Female</label>
@@ -80,29 +79,7 @@
 				<button type="submit">Submit Changes</button>
 			</form>
 		</c:when>
-		<!--<c:when test="${editingPhoto == true }">
-			<form action="editMember.do" method="post">
-				<div name="image">
-					<h5>Select image to upload:</h5>
-					<input type="file" name="memberPhoto" accept="image/*" />
-					<button type="submit">Submit</button>
-				</div>
-
-				<input type="hidden" name="memberToEditId" value="${member.id }" />
-				<input type="hidden" name="married" value="${member.married }" /> <input
-					type="hidden" name="motherId" value="${member.motherId }" /> <input
-					type="hidden" name="fatherId" value="${member.fatherId }" /> <input
-					type="hidden" name="spouseId" value="${member.spouseId }" /> <input
-					type="hidden" name="married" value="${member.married }" /> <input
-					type="hidden" name="firstName" value="${member.firstName }" /> <input
-					type="hidden" name="lastName" value="${member.lastName }" /> <input
-					type="hidden" name="gender" value="${member.gender }" /> <input
-					type="hidden" name="birthDate" value="${member.birthDate }" /> <input
-					type="hidden" name="deathDate" value="${member.deathDate }" /> <input
-					type="hidden" name="alive" value="${member.alive }" />
-				<button type="submit">Submit Changes</button>
-			</form>
-		</c:when>-->
+		
 		<c:otherwise></c:otherwise>
 	</c:choose>
 

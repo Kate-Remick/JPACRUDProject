@@ -46,7 +46,7 @@ public class FamilyController {
 		mv.addObject("siblings", dao.getSiblings(id));
 		if (member.isMarried()) {
 			if (member.getSpouseId() != null) {
-				mv.addObject("spouse", dao.getSpouse(id));
+				mv.addObject("spouse", dao.getSpouse(member.getSpouseId()));
 			}
 		}
 		mv.setViewName("memberView");
@@ -75,11 +75,11 @@ public class FamilyController {
 	@RequestMapping(path = "addMember.do", method = RequestMethod.GET)
 	public ModelAndView addMember() {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("addMember");
 		mv.addObject("allMembers", dao.getAllFamily());
 		mv.addObject("women", dao.allGender("female"));
 		mv.addObject("men", dao.allGender("male"));
 
+		mv.setViewName("addMember");
 		return mv;
 	}
 
@@ -101,6 +101,21 @@ public class FamilyController {
 		boolean success = dao.addMember(memberToAdd);
 		redir.addFlashAttribute("addSuccessful", success);
 		redir.addFlashAttribute("member", memberToAdd);
+		
+		if (memberToAdd.getMotherId() != null) {
+			redir.addFlashAttribute("mother", dao.getParent(memberToAdd.getMotherId()));
+		}
+		if (memberToAdd.getFatherId() != null) {
+			redir.addFlashAttribute("father", dao.getParent(memberToAdd.getFatherId()));
+		}
+		redir.addFlashAttribute("siblings", dao.getSiblings(memberToAdd.getId()));
+		if (memberToAdd.isMarried()) {
+			if (memberToAdd.getSpouseId() != null) {
+				redir.addFlashAttribute("spouse", dao.getSpouse(memberToAdd.getSpouseId()));
+			}
+		}
+		
+		
 		mv.setViewName("redirect:memberAdded.do");
 		if (success = false) {
 			mv.setViewName("redirect:memberNotAdded.do");
@@ -111,6 +126,7 @@ public class FamilyController {
 	@RequestMapping(path = "memberAdded.do")
 	public ModelAndView addedMember() {
 		ModelAndView mv = new ModelAndView();
+
 		mv.addObject("addedMember", true);
 		mv.setViewName("memberView");
 		return mv;

@@ -22,27 +22,11 @@
 	</c:if>
 
 
-	<!--<div name="image">
-		<h1>Include image here</h1>
-		<c:if test="${editing == true }">
-			<form action="editMember.do" method="get">
-				<input type="hidden" name="memberId" value="${member.id }">
-				<input type="hidden" name="editingPhoto" value="${true}"> <input
-					type="hidden" name="editingDetails" value="${false}"> <input
-					type="hidden" name="editingRelationships" value="${false}">
-				<button type="submit">
-					Change Photo
-					</buttion>
-			</form>
-		</c:if>
-	</div>  -->
-
-
 	<div name="details">
 		<ul>
 			<li>Birth Date: ${member.birthDate }</li>
-			<c:if test="${member.alive = false }">
-				<li>Died on: $member.deathDate</li>
+			<c:if test="${member.alive == false }">
+				<li>Died on: ${ member.deathDate}</li>
 			</c:if>
 			<c:if test="${editing == true }">
 				<form action="editMember.do" method="get">
