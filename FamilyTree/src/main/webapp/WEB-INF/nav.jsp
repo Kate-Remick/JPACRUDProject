@@ -4,9 +4,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Navigation</title>
+<%@ include file="bootstrapHeader.jsp"%>
 </head>
 <body>
-<a href="index.do" method="get">Return Home</a>
+<div class="nav" >
+<a href="index.do" method="get" >Return Home</a>
+</div>
+<%@ include file="bootstrapFooter.jsp"%>
 </body>
 </html>

@@ -59,9 +59,9 @@ public class FamilyDAOImpl implements FamilyDAO {
 
 	@Override
 	public List<Member> findByName(String firstName, String lastName) {
-		String sql = "SELECT mem FROM Member mem WHERE mem.firstName LIKE :firstName OR mem.lastName LIKE :lastName";
+		String sql = "SELECT mem FROM Member mem WHERE mem.firstName = :firstName OR mem.lastName = :lastName";
 		List<Member> matchingMembers = em.createQuery(sql, Member.class)
-				.setParameter("firstName", "%" + firstName + "%").setParameter("lastName", "%" + lastName + "%")
+				.setParameter("firstName",firstName ).setParameter("lastName",lastName )
 				.getResultList();
 		return matchingMembers;
 	}
@@ -69,17 +69,12 @@ public class FamilyDAOImpl implements FamilyDAO {
 	@Override
 	public boolean removeMember(int id) {
 		Member member = em.find(Member.class, id);
-		Integer spouseId = member.getSpouseId();
 		boolean success = false;
 		if (member != null) {
-			System.out.println("deleting member");
 			em.remove(member);
 		}
-		System.out.println("checking member record");
 		success = !em.contains(member);
 		System.out.println(success);
-//		clearChildRecords(id, spouseId);
-		System.out.println("returning to controller");
 		return success;
 	}
 

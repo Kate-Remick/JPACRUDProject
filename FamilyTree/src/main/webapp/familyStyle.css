@@ -1,1 +1,14 @@
 @charset "UTF-8";
+.nav {
+	background-color: lightgray;
+	border-color: lightgreen;
+	border-width: medium;
+	border-style: ridge;
+	text-decoration: underline;
+	text-decoration-color: black;
+	text-align: center;
+}
+.main{
+	margin: 0px;
+	height: 100%;
+}

@@ -9,8 +9,7 @@
 <%@ include file="bootstrapHeader.jsp"%>
 </head>
 <body>
-	<c:choose>
-		<c:when test="${searchingMember == true }">
+		<c:if test="${searchingMember == true }">
 			<c:choose>
 				<c:when test="${! empty members }">
 				<c:forEach var="member" items="${members}">
@@ -22,8 +21,8 @@
 					<h3>There is no family member matching your results</h3>
 				</c:when>
 			</c:choose>
-		</c:when>
-		<c:otherwise>
+		</c:if>
+		<c:if test="${getAll == true }">
 			<h2>All family members:</h2>
 			<ul>
 				<c:forEach var="member" items="${members}">
@@ -31,9 +30,7 @@
 					</li>
 				</c:forEach>
 			</ul>
-		</c:otherwise>
-	</c:choose>
-
+		</c:if>
 	<%@ include file="bootstrapFooter.jsp"%>
 </body>
 </html>

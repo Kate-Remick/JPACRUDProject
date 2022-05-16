@@ -53,7 +53,7 @@ public class FamilyController {
 		return mv;
 	}
 
-	@RequestMapping(path = "getMember.do", params = { "fistName", "lastName" }, method = RequestMethod.GET)
+	@RequestMapping(path = "getMember.do", params = { "firstName", "lastName" }, method = RequestMethod.GET)
 	public ModelAndView findByName(@RequestParam("firstName") String firstName,
 			@RequestParam("lastName") String lastName) {
 		ModelAndView mv = new ModelAndView();
@@ -67,6 +67,7 @@ public class FamilyController {
 	public ModelAndView viewAll() {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("members", dao.getAllFamily());
+		mv.addObject("getAll", true);
 		mv.setViewName("listMembers");
 		return mv;
 
