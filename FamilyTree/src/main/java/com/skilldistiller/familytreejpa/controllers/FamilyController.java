@@ -2,6 +2,7 @@ package com.skilldistiller.familytreejpa.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.UnexpectedRollbackException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -111,17 +112,19 @@ public class FamilyController {
 		return mv;
 	}
 	@RequestMapping(path="editMember.do", method=RequestMethod.GET)
-	public ModelAndView editMemberView(@RequestParam("memberToEdit") Member member) {
+	public ModelAndView editMemberView(@RequestParam("memberToEdit") int memberToEditId) {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("memberview");
+		Member member = dao.findById(memberToEditId);
+		mv.setViewName("memberView");
 		mv.addObject("editing", true);
 		mv.addObject("memberToEdit", member);
 		mv.addObject("member", member);
 		return mv;
 	}
-	@RequestMapping(path="editMember.do", params="member", method=RequestMethod.GET)
-	public ModelAndView editMember(@RequestParam("member") Member member, @RequestParam("editingDetails") boolean d ,@RequestParam("editingRelationships") boolean r,@RequestParam("editingPhoto") boolean p) {
+	@RequestMapping(path="editMember.do", params="memberId", method=RequestMethod.GET)
+	public ModelAndView editMember(@RequestParam("memberId") int memberId, @RequestParam("editingDetails") boolean d ,@RequestParam("editingRelationships") boolean r,@RequestParam("editingPhoto") boolean p) {
 		ModelAndView mv = new ModelAndView();
+		Member member = dao.findById(memberId);
 		if(d) {
 			mv.addObject("editingDetails", d);
 		}if(r) {
@@ -138,10 +141,11 @@ public class FamilyController {
 		return mv;
 	}
 	@RequestMapping(path="editMember.do", method=RequestMethod.POST)
-	public ModelAndView editingMember(Member memberEdits, @RequestParam("member") Member memberToEdit, RedirectAttributes redir ) {
+	public ModelAndView editingMember(Member memberEdits, @RequestParam("memberToEditId") int memberToEditId, RedirectAttributes redir ) {
 		ModelAndView mv = new ModelAndView();
+		Member memberToEdit = dao.findById(memberToEditId);
 		memberToEdit = dao.editMember(memberToEdit, memberEdits);
-		redir.addFlashAttribute("memberToEdit", memberToEdit);
+		redir.addFlashAttribute("memberEdited", memberToEdit);
 		mv.setViewName("redirect:memberEdited.do");
 		return mv;
 	}
@@ -153,13 +157,25 @@ public class FamilyController {
 		return mv;
 	}
 	@RequestMapping(path="delete.do", method = RequestMethod.GET)
-	public String removeMember() {
-		return "removeMember";
+	public ModelAndView removeMember() {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("allMembers", dao.getAllFamily());
+		mv.setViewName("removeMember");
+		return mv;
 	}
 	@RequestMapping(path="delete.do", method=RequestMethod.POST)
 	public ModelAndView removedMember(@RequestParam("deleteId") int deleteId) {
+		Integer spouseId = dao.findById(deleteId).getSpouseId();
 		boolean deletionSuccess = dao.removeMember(deleteId);
+		System.out.println("back in conroller");
+		try {
+			dao.clearChildRecords(deleteId, spouseId);
+		}catch (UnexpectedRollbackException e) {
+			System.out.println("rollback while cleaning child records");
+		}
+		System.out.println("back in conroller");
 		ModelAndView mv = new ModelAndView();
+		mv.addObject("allMembers", dao.getAllFamily());
 		mv.addObject("deletionSuccess", deletionSuccess);
 		mv.addObject("deleting", true);
 		mv.setViewName("index");

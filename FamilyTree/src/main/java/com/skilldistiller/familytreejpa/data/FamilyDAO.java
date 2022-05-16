@@ -29,6 +29,8 @@ public Member getParent(int parentId);
 
 public Member getSpouse(int id);
 
+public void clearChildRecords(int id, Integer spouseId);
+
 //public Map<String, List<Member>> getDirectFamily(int id);
 
 }

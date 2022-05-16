@@ -11,17 +11,23 @@
 <body>
 	<%@ include file="nav.jsp"%>
 	<h1>Information on ${member}</h1>
+	<c:if test="${empty editing }">
+	<form action="editMember.do" method="get">
+			<input type="hidden" name="memberToEdit" value="${member.id }" />
+			<button type="submit">Edit Member</button>
+		</form>
+	</c:if>
 	<c:if test="${memberAdded == true }">
-		<p>${member }added to the family tree successfully!</p>
+		<p>${member }addedto the family tree successfully!</p>
 	</c:if>
 
 
 	<div name="image">
 		<h1>Include image here</h1>
 		<c:if test="${editing == true }">
-			<form action="editMember.do" method="post">
-				<input type="hidden" name="member" value="${member }"> <input
-					type="hidden" name="editingPhoto" value="${true}"> <input
+			<form action="editMember.do" method="get">
+				<input type="hidden" name="memberId" value="${member.id }">
+				<input type="hidden" name="editingPhoto" value="${true}"> <input
 					type="hidden" name="editingDetails" value="${false}"> <input
 					type="hidden" name="editingRelationships" value="${false}">
 				<button type="submit">
@@ -34,19 +40,17 @@
 
 	<div name="details">
 		<ul>
-			<li>Born on: ${member.birthDate }</li>
+			<li>Birth Date: ${member.birthDate }</li>
 			<c:if test="${member.alive = false }">
 				<li>Died on: $member.deathDate</li>
 			</c:if>
 			<c:if test="${editing == true }">
-				<form action="editMember.do" method="post">
-					<input type="hidden" name="member" value="${member }"> <input
-						type="hidden" name="editingDetails" value="${true}"> <input
-						type="hidden" name="editingPhoto" value="${false}"> <input
-						type="hidden" name="editingRelationships" value="${false}">
-					<button type="submit">
-						Edit Details
-						</buttion>
+				<form action="editMember.do" method="get">
+					<input type="hidden" name="memberId" value="${member.id }">
+					<input type="hidden" name="editingPhoto" value="${false}">
+					<input type="hidden" name="editingDetails" value="${true}">
+					<input type="hidden" name="editingRelationships" value="${false}">
+					<button type="submit">Edit Details</button>
 				</form>
 
 			</c:if>
@@ -57,7 +61,7 @@
 
 	<div name="relationships">
 		<ul>
-			<c:if test="${member.married = true }">
+			<c:if test="${member.married == true }">
 				<c:choose>
 					<c:when test="${! empty spouse }">
 						<li>Married to: <a href="getMember.do?id=${spouse.id}">${spouse }</a></li>
@@ -67,11 +71,15 @@
 					</c:otherwise>
 				</c:choose>
 			</c:if>
-			<li><a href="getMember.do?id=${mother.id }">Mother: ${mother }</a>
+			<li>Mother: <c:if test="${empty mother }">
+			Unknown
+			</c:if> <a href="getMember.do?id=${mother.id }"> ${mother }</a>
 			</li>
-			<li><a href="getMember.do?id=${father.id }">Father: ${father }</a>
+			<li>Father: <c:if test="${empty father }">
+			Unknown
+			</c:if> <a href="getMember.do?id=${father.id }"> ${father }</a>
 			</li>
-			<li>Siblings
+			<li>Siblings:
 				<ul>
 					<c:forEach var="sibling" items="${siblings }">
 						<li><a href="getMember.do?id=${sibling.id }">${sibling }</a></li>
@@ -80,10 +88,10 @@
 			</li>
 		</ul>
 		<c:if test="${editing == true }">
-			<form action="editMember.do" method="post">
-				<input type="hidden" name="member" value="${member }"> <input
+			<form action="editMember.do" method="get">
+				<input type="hidden" name="memberId" value="${member.id }">
+				<input type="hidden" name="editingPhoto" value="${false}"> <input
 					type="hidden" name="editingDetails" value="${false}"> <input
-					type="hidden" name="editingPhoto" value="${false}"> <input
 					type="hidden" name="editingRelationships" value="${true}">
 				<button type="submit">
 					Edit Relationships

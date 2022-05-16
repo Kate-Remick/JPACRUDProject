@@ -17,17 +17,17 @@
 		remove members from the family using the links provided on this page.
 		<br> Otherwise, you can view the information of one or all family
 		members using the form below!
-	</p>
+	</p><br>
 	<c:if test="${deleting == true }">
-		<c:if test="${deletionSuccessful == true }">
-			<p>Deletion Successful</p>
+		<c:if test="${deletionSuccess == true }">
+			<p>Deletion Successful. All Records Clean</p>
 		</c:if>
-		<c:if test="${deletionSuccessfulSuccessful == false }">
+		<c:if test="${deletionSuccess == false }">
 			<p>Something went wrong. Deletion was not successful.</p>
 		</c:if>
 	</c:if>
-	<c:if test="${memberEdited == true }">
-		<p>Family member edited: ${memberToEdit}</p>
+	<c:if test="${editedMember == true }">
+		<p>Family member edited: ${memberEdited}</p>
 	</c:if>
 	<c:if test="${memberAdded == true }">
 		<p>Something went wrong. Your family member was not added.</p>
@@ -56,7 +56,7 @@
 		<label for="memberToEdit">Select Member:</label>
 			<select id="memberToEdit" name="memberToEdit" >
 			<c:forEach var="member" items="${allMembers}">
-			<option value="${member}">${member }</option>
+			<option value="${member.id}">${member }</option>
 			</c:forEach>
 			</select>
 		<button type="submit">Change member details</button>

@@ -1,15 +1,13 @@
 package com.skilldistiller.familytreejpa.data;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.UnexpectedRollbackException;
 
 import com.skilldistiller.familytreejpa.entities.Member;
 
@@ -41,34 +39,22 @@ public class FamilyDAOImpl implements FamilyDAO {
 		return members;
 	}
 
-
 	public List<Member> getSiblings(int id) {
 		String siblingSql1 = "SELECT mem FROM Member mem WHERE (mem.motherId=:motherId OR mem.fatherId=:fatherId) AND mem.id !=:id ";
 		Member member = em.find(Member.class, id);
-		List<Member> siblings = em.createQuery(siblingSql1, Member.class).setParameter("motherId", member.getMotherId()).setParameter("id", id)
-				.setParameter("fatherId", member.getFatherId()).getResultList();
+		List<Member> siblings = em.createQuery(siblingSql1, Member.class).setParameter("motherId", member.getMotherId())
+				.setParameter("id", id).setParameter("fatherId", member.getFatherId()).getResultList();
 		return siblings;
 	}
 
 	public Member getParent(int parentId) {
-		try {
-			Member parent = em.find(Member.class, parentId);
-			return parent;
-
-		} catch (NoResultException e) {
-		}
-
-		return null;
+		Member parent = em.find(Member.class, parentId);
+		return parent;
 	}
+
 	public Member getSpouse(int spouseId) {
-		try {
-			Member spouse = em.find(Member.class, spouseId);
-			return spouse;
-			
-		} catch (NoResultException e) {
-		}
-		
-		return null;
+		Member spouse = em.find(Member.class, spouseId);
+		return spouse;
 	}
 
 	@Override
@@ -83,12 +69,47 @@ public class FamilyDAOImpl implements FamilyDAO {
 	@Override
 	public boolean removeMember(int id) {
 		Member member = em.find(Member.class, id);
+		Integer spouseId = member.getSpouseId();
 		boolean success = false;
 		if (member != null) {
+			System.out.println("deleting member");
 			em.remove(member);
-			success = !em.contains(member);
 		}
+		System.out.println("checking member record");
+		success = !em.contains(member);
+		System.out.println(success);
+//		clearChildRecords(id, spouseId);
+		System.out.println("returning to controller");
 		return success;
+	}
+
+	@Override
+	public void clearChildRecords(int id, Integer spouseId) {
+		try {
+			String sql = "SELECT fam FROM Member fam WHERE fam.motherId = :mom OR fam.fatherId =:dad";
+			System.out.println("cleaning child records");
+			List<Member> children = em.createQuery(sql, Member.class).setParameter("dad", id).setParameter("mom", id)
+					.getResultList();
+			for (Member child : children) {
+				if (child.getMotherId() == id) {
+					child.setMotherId("");
+				}
+				if (child.getFatherId() == id) {
+					child.setFatherId("");
+				}
+			}
+		} catch (IllegalArgumentException e) {
+		} 
+		try {
+			Member spouse = em.find(Member.class, spouseId);
+			if (spouse != null) {
+				spouse.setSpouseId("");
+			}
+		} catch (IllegalArgumentException e) {
+		} 
+		System.out.println("Child records clean");
+		return;
+
 	}
 
 	@Override
